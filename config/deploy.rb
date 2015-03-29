@@ -39,30 +39,15 @@ set :deploy_via, :copy
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-# namespace :deploy do
-#   task :start do ; end
-#   task :stop do ; end
-#
-#   desc "Symlink shared config files"
-#   task :symlink_config_files do
-#     run "#{ sudo } ln -s #{ deploy_to }/shared/config/database.yml #{ current_path }/config/database.yml"
-#   end
-#
-#   # NOTE: I don't use this anymore, but this is how I used to do it.
-#   desc "Precompile assets after deploy"
-#   task :precompile_assets do
-#     run <<-CMD
-#       cd #{ current_path } &&
-#       #{ sudo } bundle exec rake assets:precompile RAILS_ENV=#{ rails_env }
-#     CMD
-#   end
-#
-#   desc "Restart applicaiton"
-#   task :restart do
-#     run "#{ try_sudo } touch #{ File.join(current_path, 'tmp', 'restart.txt') }"
-#   end
-# end
-#
-# after "deploy", "deploy:symlink_config_files"
-# after "deploy", "deploy:restart"
-# after "deploy", "deploy:cleanup"
+namespace :deploy do
+
+  after :restart, :clear_cache do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
+      # Here we can do anything such as:
+      # within release_path do
+      #   execute :rake, 'cache:clear'
+      # end
+    end
+  end
+
+end
