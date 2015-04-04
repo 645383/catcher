@@ -18,7 +18,7 @@ set :use_sudo, false
 set :rails_env, "production"
 set :deploy_via, :copy
 
-set :ping_url, "http://localhost"
+# set :ping_url, "http://localhost"
 # Default value for :format is :pretty
 # set :format, :pretty
 
@@ -56,33 +56,33 @@ namespace :deploy do
     end
   end
 
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      execute "mkdir -p #{release_path.join('tmp')}"
-      execute :touch, release_path.join('tmp/restart.txt')
-    end
-  end
-
-  after :publishing, :restart
-
-  desc 'Warm up the application by pinging it, so enduser wont have to wait'
-  task :ping do
-    on roles(:app), in: :sequence, wait: 5 do
-      execute "curl -s -D - #{fetch(:ping_url)} -o /dev/null"
-    end
-  end
-
-  after :restart, :ping
-
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
-    end
-  end
+  # desc 'Restart application'
+  # task :restart do
+  #   on roles(:app), in: :sequence, wait: 5 do
+  #     execute "mkdir -p #{release_path.join('tmp')}"
+  #     execute :touch, release_path.join('tmp/restart.txt')
+  #   end
+  # end
+  #
+  # after :publishing, :restart
+  #
+  # desc 'Warm up the application by pinging it, so enduser wont have to wait'
+  # task :ping do
+  #   on roles(:app), in: :sequence, wait: 5 do
+  #     execute "curl -s -D - #{fetch(:ping_url)} -o /dev/null"
+  #   end
+  # end
+  #
+  # after :restart, :ping
+  #
+  # after :restart, :clear_cache do
+  #   on roles(:web), in: :groups, limit: 3, wait: 10 do
+  #     # Here we can do anything such as:
+  #     # within release_path do
+  #     #   execute :rake, 'cache:clear'
+  #     # end
+  #   end
+  # end
 end
 
 after "deploy", "deploy:symlink_config_files"
