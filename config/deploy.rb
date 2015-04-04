@@ -50,6 +50,7 @@ namespace :deploy do
   task :symlink_config_files do
     on roles(:app) do
       execute "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+      execute "ln -nfs #{shared_path}/config/secrets.yml #{release_path}/config/secrets.yml"
     end
   end
 
