@@ -17,8 +17,8 @@ set :user, "deployer"
 set :use_sudo, true
 set :rails_env, "production"
 set :deploy_via, :copy
-set :passenger_restart_with_sudo, true
-set :pty, true
+# set :passenger_restart_with_sudo, true
+# set :pty, true
 # set :ping_url, "http://localhost"
 # Default value for :format is :pretty
 # set :format, :pretty
@@ -57,12 +57,12 @@ namespace :deploy do
     end
   end
 
-  # desc 'Restart application'
-  # task :restart do
-  #     on roles(:app), in: :sequence, wait: 5 do
-  #       execute "service nginx restart"
-  #     end
-  #   end
+  desc 'Restart application'
+  task :restart do
+      on roles(:app), in: :sequence, wait: 5 do
+        execute :sudo, "service nginx restart"
+      end
+    end
   #
   # desc 'Restart application'
   # task :restart do
@@ -94,5 +94,5 @@ namespace :deploy do
 end
 
 after "deploy", "deploy:symlink_config_files"
-# after "deploy", "deploy:restart"
+after "deploy", "deploy:restart"
 # after "deploy", "deploy:cleanup"
