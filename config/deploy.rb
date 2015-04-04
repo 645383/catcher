@@ -40,8 +40,12 @@ set :deploy_via, :copy
 # set :keep_releases, 5
 
 namespace :deploy do
-  task :start do ; end
-  task :stop do ; end
+  task :start do
+    ;
+  end
+  task :stop do
+    ;
+  end
 
   desc "Symlink shared config files"
   task :symlink_config_files do
@@ -61,7 +65,9 @@ namespace :deploy do
   #
   # desc "Restart applicaiton"
   # task :restart do
-  #   run "#{ try_sudo } touch #{ File.join(current_path, 'tmp', 'restart.txt') }"
+  #   on roles(:app) do
+  #     execute "#{ try_sudo } touch #{ File.join(current_path, 'tmp', 'restart.txt') }"
+  #   end
   # end
 end
 
