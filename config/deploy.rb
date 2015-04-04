@@ -14,7 +14,7 @@ set :deploy_to, '/home/deployer/catcher'
 set :scm, :git
 set :branch, "master"
 set :user, "deployer"
-set :use_sudo, true
+set :use_sudo, false
 set :rails_env, "production"
 set :deploy_via, :copy
 # set :passenger_restart_with_sudo, true
