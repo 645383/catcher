@@ -17,7 +17,7 @@ set :user, "deployer"
 set :use_sudo, false
 set :rails_env, "production"
 set :deploy_via, :copy
-
+set :passenger_restart_with_sudo, true
 # Default value for :format is :pretty
 # set :format, :pretty
 
@@ -40,12 +40,12 @@ set :deploy_via, :copy
 # set :keep_releases, 5
 
 namespace :deploy do
-  task :start do
-    ;
-  end
-  task :stop do
-    ;
-  end
+  # task :start do
+  #   ;
+  # end
+  # task :stop do
+  #   ;
+  # end
 
   desc "Symlink shared config files"
   task :symlink_config_files do
