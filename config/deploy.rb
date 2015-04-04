@@ -45,25 +45,26 @@ namespace :deploy do
 
   desc "Symlink shared config files"
   task :symlink_config_files do
-    # run "#{ sudo } ln -s #{ deploy_to }/shared/config/database.yml #{ current_path }/config/database.yml"
-    run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+    on roles(:app) do
+      execute "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+    end
   end
 
   # NOTE: I don't use this anymore, but this is how I used to do it.
-  desc "Precompile assets after deploy"
-  task :precompile_assets do
-    run <<-CMD
-      cd #{ current_path } &&
-      #{ sudo } bundle exec rake assets:precompile RAILS_ENV=#{ rails_env }
-    CMD
-  end
-
-  desc "Restart applicaiton"
-  task :restart do
-    run "#{ try_sudo } touch #{ File.join(current_path, 'tmp', 'restart.txt') }"
-  end
+  # desc "Precompile assets after deploy"
+  # task :precompile_assets do
+  #   run <<-CMD
+  #     cd #{ current_path } &&
+  #     #{ sudo } bundle exec rake assets:precompile RAILS_ENV=#{ rails_env }
+  #   CMD
+  # end
+  #
+  # desc "Restart applicaiton"
+  # task :restart do
+  #   run "#{ try_sudo } touch #{ File.join(current_path, 'tmp', 'restart.txt') }"
+  # end
 end
 
 after "deploy", "deploy:symlink_config_files"
-after "deploy", "deploy:restart"
-after "deploy", "deploy:cleanup"
+# after "deploy", "deploy:restart"
+# after "deploy", "deploy:cleanup"
