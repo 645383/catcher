@@ -17,7 +17,6 @@ set :user, "deployer"
 set :use_sudo, false
 set :rails_env, "production"
 set :deploy_via, :copy
-set :passenger_restart_with_sudo, true
 # Default value for :format is :pretty
 # set :format, :pretty
 
