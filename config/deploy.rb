@@ -57,12 +57,12 @@ namespace :deploy do
     end
   end
 
-  desc 'Restart application'
-  task :restart do
-      on roles(:app), in: :sequence, wait: 5 do
-        execute :sudo, "service nginx restart"
-      end
-    end
+  # desc 'Restart application'
+  # task :restart do
+  #     on roles(:app), in: :sequence, wait: 5 do
+  #       execute :sudo, "service nginx restart"
+  #     end
+  #   end
   #
   # desc 'Restart application'
   # task :restart do
@@ -94,5 +94,5 @@ namespace :deploy do
 end
 
 after "deploy", "deploy:symlink_config_files"
-after "deploy", "deploy:restart"
+# after "deploy", "deploy:restart"
 # after "deploy", "deploy:cleanup"
